@@ -32,18 +32,15 @@ function App() {
     socket.on("connect", () => {
       console.log("connected");
     });
+    socket.on("receive", ({ content, username }) => {
+      setMessagesList((prev) => [...prev, { content, username }]);
+    });
     socket.connect();
 
     return () => {
       socket.disconnect();
     };
   }, []);
-
-  useEffect(() => {
-    socket.on("receive", ({ content, username }) => {
-      setMessagesList((prev) => [...prev, { content, username }]);
-    });
-  }, [socket]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
